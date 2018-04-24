@@ -4,6 +4,8 @@ import feedparser
 from feedgen.feed import FeedGenerator
 
 SLACK_TEMPLATE = {
+    'username': None,
+    'icon_emoji': ':lock:',
     'attachments': [
         {
             'color': '#ff0000',
@@ -28,9 +30,12 @@ SLACK_TEMPLATE = {
 }
 
 
-def _gen_rich_message(author_name, title, title_link, text, disclosure_date, keywords_matched):
+def _gen_rich_message(author_name, username, title, title_link, text, disclosure_date, keywords_matched, emoji=':lock:'):
     result = dict(SLACK_TEMPLATE)
+    result['icon_emoji'] = emoji
+    result['username'] = username
     attachment = result['attachments'][0]
+    attachment['author_name'] = author_name
     attachment['author_name'] = author_name
     attachment['title'] = title
     attachment['title_link'] = title_link
@@ -73,9 +78,11 @@ class CVEParser:
                     continue
 
                 yield _gen_rich_message(author_name=self.config.get('slack_author'),
+                                        username=self.config.get('slack_username'),
                                         title=entry['title'],
                                         title_link=entry['link'],
                                         text=entry['summary'],
                                         disclosure_date=entry['updated'],
-                                        keywords_matched=','.join(matches))
+                                        keywords_matched=','.join(matches),
+                                        emoji=self.config.get('slack_emoji_icon'))
 

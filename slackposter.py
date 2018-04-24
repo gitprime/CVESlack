@@ -1,10 +1,8 @@
-import datetime
 import json
 import os
 import re
 
 import requests
-import yaml
 
 from cveparser import CVEParser
 from query import Query
