@@ -28,12 +28,13 @@ SLACK_TEMPLATE = {
 }
 
 
-def _gen_rich_message(author_name, title, title_link, disclosure_date, keywords_matched):
+def _gen_rich_message(author_name, title, title_link, text, disclosure_date, keywords_matched):
     result = dict(SLACK_TEMPLATE)
     attachment = result['attachments'][0]
     attachment['author_name'] = author_name
     attachment['title'] = title
     attachment['title_link'] = title_link
+    attachment['text'] = text
     attachment['fields'][0]['value'] = disclosure_date
     attachment['fields'][1]['value'] = keywords_matched
     result['attachments'][0] = attachment
@@ -74,6 +75,7 @@ class CVEParser:
                 yield _gen_rich_message(author_name=self.config.get('slack_author'),
                                         title=entry['title'],
                                         title_link=entry['link'],
+                                        text=entry['summary'],
                                         disclosure_date=entry['updated'],
                                         keywords_matched=','.join(matches))
 
