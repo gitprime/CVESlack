@@ -60,3 +60,7 @@ target/
 \.idea/
 
 \.dependencies\.txt
+
+\.cve_cache
+
+config\.yml
