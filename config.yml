@@ -1,6 +1,8 @@
 # Settings for slack
 slack_author: "CVESlack"
 slack_webhook: "https://hooks.slack.com/services/XXXXXX/XXXXXXXXXXXXXXXXX"
+# Posts every 5 minutes by default
+slack_post_interval: 5
 
 
 # Feeds to pull from. Must have "title" and "description" fields set.
