@@ -1,8 +1,6 @@
 import argparse
 from time import sleep
 
-import yaml
-
 from slackposter import CVEPoster
 
 if __name__ == '__main__':

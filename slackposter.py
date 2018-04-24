@@ -1,4 +1,6 @@
 import datetime
+import json
+import os
 import re
 
 import requests
@@ -49,6 +51,13 @@ class CVEPoster:
         self.last_update = None
         self.cve_list = None
         self.old_cve_list = None
+        if os.path.exists('.cve_cache') and os.path.isfile('.cve_cache'):
+            with open('.cve_cache') as f:
+                try:
+                    self.old_cve_list = json.loads(f.read())
+                except Exception as e:
+                    self.old_cve_list = None
+
         self.post_to_feed_if_needed()
         self.slack_webhook = None
 
@@ -79,4 +88,6 @@ class CVEPoster:
 
                 if self.cve_list:
                     self.old_cve_list = self.cve_list
+                    with open('.cve_cache', 'w+') as f:
+                        f.write(json.dumps(self.old_cve_list))
             self.last_update = now
