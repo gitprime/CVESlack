@@ -1,7 +1,6 @@
 import json
 
 import feedparser
-from feedgen.feed import FeedGenerator
 
 SLACK_TEMPLATE = {
     'username': None,
@@ -50,22 +49,22 @@ class CVEParser:
 
     def __init__(self, config):
         self.config = config
-        self.desired_strings = []
+        self.required_queries = []
         self.strip_spaces = config.get('strip_spaces')
         self.cve_feed_urls = config.get('feed_lists')
 
-    def add_desired_string(self, string):
-        self.desired_strings.append(string)
+    def add_desired_query(self, query):
+        self.required_queries.append(query)
 
     def generate_feed(self):
         for cve_feed_url in self.cve_feed_urls:
             parsed_feed = feedparser.parse(cve_feed_url)
             for entry in parsed_feed.entries:
                 matches = []
-                for match in self.desired_strings:
+                for match in self.required_queries:
                     full_text = entry['title'].lower() + '\n' + entry['summary'].lower()
 
-                    if match.query in full_text:
+                    if match.query.matches(full_text):
                         has_all_requirments = True
                         for extra in match.required_tags:
                             if not extra.lower() in full_text:
