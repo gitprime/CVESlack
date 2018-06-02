@@ -1,6 +1,5 @@
-linux==4.13
+linux & 4.13
 apache
-mysql
+mysql & -mysqljs
 maria
-mysqldb
 mariadb

@@ -64,14 +64,7 @@ class CVEParser:
                 for match in self.required_queries:
                     full_text = entry['title'].lower() + '\n' + entry['summary'].lower()
 
-                    if match.query.matches(full_text):
-                        has_all_requirments = True
-                        for extra in match.required_tags:
-                            if not extra.lower() in full_text:
-                                has_all_requirments = False
-
-                        if not has_all_requirments:
-                            continue
+                    if match.matches(full_text):
                         matches.append(match.query.lower().strip())
                 if len(matches) == 0:
                     continue

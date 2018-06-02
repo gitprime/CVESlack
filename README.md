@@ -5,11 +5,12 @@ linux
 wordpress
 ````
 Will post to slack for any new (or recently updated) CVEs matching `linux` or `wordpress`.
-You can use `__` to determine left or right padding on a per-pattern basis. For instance, `__py` would match ` testpy`, but not `testpy `. Similarly, `py__` would match `testpy `, but not ` testpy`.
-You could also require a version number. **Please note this might return false negatives. NVD does not provide formal version data.**. 
-You can use this feature by doing something like:
-```
-linux==4.13
-```
+You can use `__` to determine left or right padding on a per-pattern basis. For instance, `__py` would match ' testpy', but not 'testpy '. Similarly, `py__` would match 'testpy ', but not ' testpy'.
+You can also specify required combinations of keywords. For instance,
+`linux & kernel`
+will require that an entry contains both `linux` and `kernel`.
 
-The example config pulls from nvd and seclists. It posts to a nonexistent webhook by default.
+You can also set required keywords to be negative. For instance, this line will match entries for 'sql', but not if they also contain 'server':
+`sql & -server`
+
+The example config pulls from nvd and seclists. It posts to a nonexistent slack webhook by default.

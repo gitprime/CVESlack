@@ -1,4 +1,5 @@
 import argparse
+import traceback
 from time import sleep
 
 import yaml
@@ -20,6 +21,6 @@ if __name__ == '__main__':
                 cve_poster = CVEPoster(config)
                 slack_post_interval = config.get('slack_post_interval')
                 cve_poster.post_to_feed_if_needed(config)
-            except:
-                pass
+            except Exception as e:
+                traceback.print_exc(e)
         sleep(slack_post_interval * 60)
