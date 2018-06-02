@@ -1,4 +1,7 @@
 ## CVESlack
+![Example message](https://i.imgur.com/jOFb609.png)   
+_An example message_  
+
 Spinoff of [CVEStack](https://github.com/Plazmaz/CVEStack) to be slack-centric. Scans feeds for various elements within the stack, then posts to a slack webhook. Supports a pip-style format. For instance, this file:
 ```
 linux
